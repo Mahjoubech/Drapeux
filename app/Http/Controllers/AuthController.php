@@ -37,10 +37,10 @@ class AuthController extends Controller
         'token' => $token->plainTextToken
 ];
     }
-    // public function logout(Request $request){
-    //     $request->user()->tokens()->delete();
-    //     return ['message' => 'You Are Logout'];
+    public function logout(Request $request){
+        $request->user()->tokens()->delete();
+        return ['message' => 'You Are Logout'];
 
 
-    // }
+    }
 }
