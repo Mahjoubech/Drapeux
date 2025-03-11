@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
@@ -18,10 +19,28 @@ class AuthController extends Controller
         $user = User::create($field);
   $token = $user->createToken($request->name);
        return ['user' => $user,
-                'token' => $token
+                'token' => $token->plainTextToken
     ];
     }
-    public function login(){
+    public function login(Request $request){
+        $field = $request->validate([
+            'email' => 'required|string|email|exists:users',
+            'password' => 'required',
+        ]);
+        $user = User::where('email',$request->email)->first();
+        if(!$user || !Hash::check($request->password ,$user->password)){
+          return ['message' => 'Incorrect'];
+        }
+  $token = $user->createToken($user->name);
 
+        return ['user' => $user,
+        'token' => $token->plainTextToken
+];
     }
+    // public function logout(Request $request){
+    //     $request->user()->tokens()->delete();
+    //     return ['message' => 'You Are Logout'];
+
+
+    // }
 }
