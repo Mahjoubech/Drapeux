@@ -9,23 +9,19 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $request->validate([
+       $field = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json([
-            'token' => $user->createToken('Token User Api')->plainTextToken
-        ]);
+        $user = User::create($field);
+  $token = $user->createToken($request->name);
+       return ['user' => $user,
+                'token' => $token
+    ];
     }
     public function login(){
-        
+
     }
 }
