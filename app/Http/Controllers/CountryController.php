@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
-use App\Http\Requests\StoreCountryRequest;
-use App\Http\Requests\UpdateCountryRequest;
+use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
@@ -13,13 +12,13 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        return Country::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCountryRequest $request)
+    public function store(Request $request)
     {
         //
     }

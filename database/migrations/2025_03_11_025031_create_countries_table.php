@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('capital');
+            $table->integer('population');
+            $table->string('region');
+            $table->string('flag_url');
             $table->timestamps();
         });
     }
