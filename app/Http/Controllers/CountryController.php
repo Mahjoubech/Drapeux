@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Country;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 
-class CountryController extends Controller
+class CountryController extends Controller 
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except(['index', 'show']);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -27,7 +33,7 @@ class CountryController extends Controller
             'region' => 'required|string|min:3|max:100',
             'flag_url' => 'required|url|max:255',
         ]);
-        $cnt = Country::create($country);
+        $cnt = $request->user()->countries()->create($country);
         return  $cnt;
     }
 
