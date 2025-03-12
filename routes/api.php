@@ -16,9 +16,10 @@ use App\Http\Controllers\CountryController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/country', function (Request $request) {
-//     return $request->user()->countries();
-// });
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
 Route::get('/',function(){
          return 'API';
 });
