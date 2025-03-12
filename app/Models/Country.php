@@ -15,4 +15,7 @@ class Country extends Model
     'region',
     'flag_url'
    ];
+   public function user(){
+    return $this->belongsTo(User::class);
+ }
 }
