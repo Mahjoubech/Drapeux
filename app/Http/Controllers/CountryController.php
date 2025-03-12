@@ -6,8 +6,8 @@ use App\Models\Country;
 use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\HasMiddleware;
-
-class CountryController extends Controller 
+use Illuminate\Support\Facades\Gate;
+class CountryController extends Controller
 {
     public function __construct()
     {
@@ -50,6 +50,7 @@ class CountryController extends Controller
      */
     public function update(Request $request, Country $country)
     {
+        Gate::authorize('modify',$country);
         $filed =  $request->validate([
             'name' => 'required|string|min:3|max:100',
             'capital' => 'required|string|min:3|max:100',
@@ -66,6 +67,8 @@ class CountryController extends Controller
      */
     public function destroy(Country $country)
     {
+        Gate::authorize('modify',$country);
+
        $country->delete();
        return ['message' => 'The Country was deleted'];
     }
