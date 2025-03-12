@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('population');
             $table->string('region');
             $table->string('flag_url');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
